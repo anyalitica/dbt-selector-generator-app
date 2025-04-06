@@ -1,6 +1,6 @@
 import streamlit as st
 import yaml
-import pyperclip
+# import pyperclip
 from typing import Dict, List, Any, Optional, Union
 
 st.set_page_config(
@@ -22,7 +22,7 @@ def main():
     # Main sections in the sidebar
     section = st.sidebar.radio(
         "",
-        ["Selector Configuration", "Docs & Examples", "About"]
+        ["Selector configuration", "Docs & Examples", "About"]
     )
     
     if section == "Selector configuration":
@@ -57,25 +57,25 @@ def create_criterion_section(key_prefix="", level=0, is_exclude=False):
         # Graph operators
         col1, col2 = st.columns(2)
         with col1:
-            children = st.checkbox("Include Children", key=f"{key_prefix}_children_{level}")
+            children = st.checkbox("Include children", key=f"{key_prefix}_children_{level}")
             if children:
-                children_depth = st.number_input("Children Depth", 
+                children_depth = st.number_input("Children depth", 
                                                 min_value=1, value=1, 
                                                 key=f"{key_prefix}_children_depth_{level}")
         
         with col2:
-            parents = st.checkbox("Include Parents", key=f"{key_prefix}_parents_{level}")
+            parents = st.checkbox("Include parents", key=f"{key_prefix}_parents_{level}")
             if parents:
-                parents_depth = st.number_input("Parents Depth", 
+                parents_depth = st.number_input("Parents depth", 
                                                min_value=1, value=1, 
                                                key=f"{key_prefix}_parents_depth_{level}")
         
-        childrens_parents = st.checkbox("Include Children's Parents (@ operator)", 
+        childrens_parents = st.checkbox("Include children's parents (@ operator)", 
                                        key=f"{key_prefix}_childrens_parents_{level}")
         
         # Indirect selection
         indirect_selection = st.selectbox(
-            "Indirect Selection",
+            "Indirect selection",
             ["eager", "cautious", "buildable", "empty"],
             help="Controls how tests are indirectly selected",
             key=f"{key_prefix}_indirect_{level}"
@@ -132,12 +132,12 @@ def create_criterion_section(key_prefix="", level=0, is_exclude=False):
     
     # Exclusions (only for non-exclude criteria to avoid nesting excludes inside excludes)
     if not is_exclude:
-        add_exclusion = st.checkbox("Add Exclusions", key=f"{key_prefix}_add_excl_{level}")
+        add_exclusion = st.checkbox("Add exclusions", key=f"{key_prefix}_add_excl_{level}")
         
         if add_exclusion:
             st.subheader("Exclusions")
             num_exclusions = st.number_input(
-                "Number of Exclusions", min_value=1, max_value=5, value=1,
+                "Number of exclusions", min_value=1, max_value=5, value=1,
                 key=f"{key_prefix}_num_excl_{level}"
             )
             
@@ -159,7 +159,7 @@ def create_criterion_section(key_prefix="", level=0, is_exclude=False):
     return criterion
 
 def selector_config_section():
-    st.header("Selector Configuration")
+    st.header("Selector configuration")
     
     # Initialize selectors list in session state if not present
     if 'selectors' not in st.session_state:
@@ -167,13 +167,13 @@ def selector_config_section():
     
     # Simple selector form for basic information
     with st.form("selector_info_form"):
-        st.subheader("Basic Selector Information")
-        selector_name = st.text_input("Selector Name", "my_selector")
+        st.subheader("Basic selector information")
+        selector_name = st.text_input("Selector name", "my_selector")
         selector_description = st.text_input("Description", "Custom selector for specific models")
-        is_default = st.checkbox("Set as Default Selector")
+        is_default = st.checkbox("Set as default selector")
         
         # Submit button only for basic info
-        info_submitted = st.form_submit_button("Continue to Definition")
+        info_submitted = st.form_submit_button("Continue to definition")
     
     if info_submitted or 'current_selector_info' in st.session_state:
         # Save the basic info in session state
@@ -189,7 +189,7 @@ def selector_config_section():
         
         # Definition type selection
         definition_type = st.radio(
-            "Definition Type",
+            "Definition type",
             ["CLI-style", "Key-value", "Full YAML"],
             help="Choose how you want to define your selector"
         )
@@ -252,12 +252,12 @@ def selector_config_section():
     
     # Display current selectors
     if st.session_state.selectors:
-        st.header("Current Selectors")
+        st.header("Current selectors")
         
         for i, selector in enumerate(st.session_state.selectors):
             with st.expander(f"Selector: {selector['name']}"):
                 st.json(selector)
-                if st.button(f"Remove Selector {i+1}", key=f"remove_{i}"):
+                if st.button(f"Remove selector {i+1}", key=f"remove_{i}"):
                     st.session_state.selectors.pop(i)
                     st.rerun()
     
@@ -281,26 +281,8 @@ def selector_config_section():
             mime="text/yaml"
         )
 
-    # col1, col2 = st.columns(2)
-    # with col1:
-    #     st.text_area(
-    #         "Copy this YAML",
-    #         value=yaml_str,
-    #         height=100,
-    #         key="yaml_to_copy",
-    #         help="Select all text (Ctrl+A) and copy (Ctrl+C)"
-    #     )
-
-    #     with col2:
-    #         st.download_button(
-    #             label="Download YAML",
-    #             data=yaml_str,
-    #             file_name="selectors.yml",
-    #             mime="text/yaml"
-    #         )
-
         st.header("Reset Configuration")
-        if st.button("Clear All Selectors and Start Over", type="primary", use_container_width=True):
+        if st.button("Clear all selectors and start over", type="primary", use_container_width=True):
             # Clear all relevant session state variables
             for key in list(st.session_state.keys()):
                 if key in ['selectors', 'current_selector_info']:
@@ -310,7 +292,7 @@ def selector_config_section():
 
 
 def documentation_section():
-    st.header("dbt Selector documentation")
+    st.header("dbt selector documentation")
     
     tabs = st.tabs([
         "Selector Methods", 
@@ -523,39 +505,38 @@ def documentation_section():
                       value: critical_test
         ```
         
-        [More Examples in dbt Documentation](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
+        [More examples in dbt documentation](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
         """)
 
 def about_section():
     st.markdown("""
-    This tool helps dbt Cloud users generate a properly formatted `selector.yml` file that follows dbt's documentation and best practices. [Learn more about dbt YAML selectors](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
+    This tool helps dbt Cloud users generate a properly formatted `selector.yml` file that follows dbt's documentation and best practices, specifically:
+    
+    - Create selectors with different definition styles (CLI, Key-value, Full YAML)
+    - Configure graph operators like + and @
+    - Build complex selection criteria with unions and intersections
+    - Set up exclusions for your selectors
+    - Copy and download the generated YAML
+                
+    ### Getting started
+    
+    1. Create one or more selectors using the form
+    2. Copy or download the generated YAML
+    3. Place the content in a file named `selectors.yml` at the top level of your dbt project
+    4. Use your selectors in job commands with `dbt run --selector my_selector`                            
+                    
+    ### Why use selectors?
     
     YAML selectors provide several benefits:
     - **Legibility:** complex selection criteria are more readable
     - **Version control:** selector definitions can be stored in your git repository
     - **Reusability:** selectors can be referenced in multiple job definitions
     - **Complexity management:** build sophisticated selection logic that would be unwieldy on the command line
-
-    ### App features
-    
-    This app streamlines your selector development process by enabling you to:
-    - Create selectors with different definition styles (CLI, Key-value, Full YAML)
-    - Configure graph operators like + and @
-    - Build complex selection criteria with unions and intersections
-    - Set up exclusions for your selectors
-    - Copy and download the generated YAML
-
-    ### Getting started
-    
-    1. Create one or more selectors using the form
-    2. Copy or download the generated YAML
-    3. Place the content in a file named `selectors.yml` at the top level of your dbt project
-    4. Use your selectors in job commands with `dbt run --selector my_selector`
-    
                 
     ### Credits
 
     Designed by: Anya Prosvetova, [anyalitica.dev](https://anyalitica.dev)
+                
     Please submit any issues or suggestions for this app on the [GitHub issues page](https://github.com/anyalitica/dbt-selector-generator-app/issues?q=is%3Aissue).            
     """)
 

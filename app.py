@@ -532,8 +532,6 @@ def about_section():
     - **Version control:** selector definitions can be stored in your git repository
     - **Reusability:** selectors can be referenced in multiple job definitions
     - **Complexity management:** build sophisticated selection logic that would be unwieldy on the command line
-
-    [Learn more about dbt YAML selectors](https://docs.getdbt.com/reference/node-selection/yaml-selectors)            
                 
     ### Credits
 

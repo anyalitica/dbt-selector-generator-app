@@ -17,15 +17,14 @@ def main():
     Configure your selectors with a user-friendly interface and generate valid YAML code.
     """)
     
-    st.sidebar.title("Options")
+    st.sidebar.title("Navigation")
     
     # Main sections in the sidebar
     section = st.sidebar.radio(
-        "Navigation",
         ["Selector Configuration", "Documentation", "About"]
     )
     
-    if section == "Selector Configuration":
+    if section == "Selector configuration":
         selector_config_section()
     elif section == "Documentation":
         documentation_section()
@@ -185,7 +184,7 @@ def selector_config_section():
             }
         
         # Now display the definition section
-        st.subheader(f"Define Selection Logic for '{st.session_state.current_selector_info['name']}'")
+        st.subheader(f"Define selection logic for '{st.session_state.current_selector_info['name']}'")
         
         # Definition type selection
         definition_type = st.radio(
@@ -449,6 +448,13 @@ def documentation_section():
         ## Examples
         
         ### Example 1: Models for nightly batch processing
+                    
+        This selector will include models that match any of the following criteria:
+            - Models tagged with `nightly`
+            - Models that are both:
+            - Located in the `models/marts` directory path
+            - Configured with `materialized: incremental`
+            - But will exclude any models that have the tag `skip_batch`            
         
         ```yaml
         selectors:
@@ -469,6 +475,12 @@ def documentation_section():
         ```
         
         ### Example 2: Critical models and their dependencies
+                    
+        This selector will include:
+            - Models tagged with `critical` AND all of their parent models (dependencies)
+            - Models referenced by the `executive_dashboard` exposure AND all of their parent models (dependencies)
+
+        This configuration ensures you run not just the critical models but everything they depend on as well.            
         
         ```yaml
         selectors:
@@ -485,7 +497,16 @@ def documentation_section():
         ```
         
         ### Example 3: Test selection
-        
+
+        This selector uses a combination of `intersection` and `union` operators to create a logical selection structure that will include:
+
+        Tests that meet BOTH of these criteria:
+            1. Are of resource type "test" (this selects only test resources)
+            2. AND match AT LEAST ONE of the following:
+                - Located in the `models/core` directory path
+                - Tagged with `critical_test`            
+
+
         ```yaml
         selectors:
           - name: core_tests
@@ -505,12 +526,8 @@ def documentation_section():
         """)
 
 def about_section():
-    st.header("About This Tool")
-    
     st.markdown("""
-    ## dbt Selector YAML Generator
-    
-    This tool helps dbt Cloud users generate a properly formatted `selector.yml` file that follows dbt's documentation and best practices.
+    This tool helps dbt Cloud users generate a properly formatted `selector.yml` file that follows dbt's documentation and best practices. [Learn more about dbt YAML selectors](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
     
     ### Features
     
@@ -520,7 +537,7 @@ def about_section():
     - Set up exclusions for your selectors
     - Copy and download the generated YAML
     
-    ### Why Use Selectors?
+    ### Why use selectors?
     
     YAML selectors provide several benefits:
     - **Legibility:** complex selection criteria are more readable
@@ -528,14 +545,20 @@ def about_section():
     - **Reusability:** selectors can be referenced in multiple job definitions
     - **Complexity management:** build sophisticated selection logic that would be unwieldy on the command line
     
-    ### Getting Started
+    ### Getting started
     
     1. Create one or more selectors using the form
     2. Copy or download the generated YAML
     3. Place the content in a file named `selectors.yml` at the top level of your dbt project
-    4. Use your selectors with `dbt run --selector my_selector`
+    4. Use your selectors in job commands with `dbt run --selector my_selector`
     
-    [Learn more about dbt YAML selectors](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
+                
+    ### Credits
+
+    Designed by: Anya Prosvetova 
+    Website: [anyalitica.dev](https://anyalitica.dev)
+
+    Please submit any issues or suggestions for this app on the [GitHub issues page](https://github.com/anyalitica/dbt-selector-generator-app/issues?q=is%3Aissue).            
     """)
 
 if __name__ == "__main__":

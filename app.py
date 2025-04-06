@@ -212,7 +212,7 @@ def selector_config_section():
                     if 'current_selector_info' in st.session_state:
                         del st.session_state.current_selector_info
                     st.success(f"Selector '{selector['name']}' added!")
-                    st.experimental_rerun()
+                    st.rerun()
                 
         elif definition_type == "Key-value":
             with st.form("kv_form"):
@@ -232,7 +232,7 @@ def selector_config_section():
                     if 'current_selector_info' in st.session_state:
                         del st.session_state.current_selector_info
                     st.success(f"Selector '{selector['name']}' added!")
-                    st.experimental_rerun()
+                    st.rerun()
                 
         else:  # Full YAML
             st.write("Define the selection criteria for your selector:")
@@ -248,7 +248,7 @@ def selector_config_section():
                 if 'current_selector_info' in st.session_state:
                     del st.session_state.current_selector_info
                 st.success(f"Selector '{selector['name']}' added!")
-                st.experimental_rerun()
+                st.rerun()
     
     # Display current selectors
     if st.session_state.selectors:
@@ -259,7 +259,7 @@ def selector_config_section():
                 st.json(selector)
                 if st.button(f"Remove Selector {i+1}", key=f"remove_{i}"):
                     st.session_state.selectors.pop(i)
-                    st.experimental_rerun()
+                    st.rerun()
     
     # Generate final YAML
     if st.session_state.selectors:

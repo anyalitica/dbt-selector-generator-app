@@ -270,12 +270,22 @@ def selector_config_section():
         
         st.code(yaml_str, language="yaml")
         
+        # col1, col2 = st.columns(2)
+        # with col1:
+        #     if st.button("Copy to Clipboard"):
+        #         pyperclip.copy(yaml_str)
+        #         st.success("YAML copied to clipboard!")
+
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("Copy to Clipboard"):
-                pyperclip.copy(yaml_str)
-                st.success("YAML copied to clipboard!")
-        
+            st.text_area(
+                "Copy this YAML",
+                value=yaml_str,
+                height=100,
+                key="yaml_to_copy",
+                help="Select all text (Ctrl+A) and copy (Ctrl+C)"
+            )
+
         with col2:
             st.download_button(
                 label="Download YAML",

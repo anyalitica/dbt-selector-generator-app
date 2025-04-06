@@ -299,6 +299,16 @@ def selector_config_section():
     #             mime="text/yaml"
     #         )
 
+        st.header("Reset Configuration")
+        if st.button("Clear All Selectors and Start Over", type="primary", use_container_width=True):
+            # Clear all relevant session state variables
+            for key in list(st.session_state.keys()):
+                if key in ['selectors', 'current_selector_info']:
+                    del st.session_state[key]
+            st.success("All configurations cleared!")
+            st.rerun()
+
+
 def documentation_section():
     st.header("dbt Selector Documentation")
     

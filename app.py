@@ -22,12 +22,12 @@ def main():
     # Main sections in the sidebar
     section = st.sidebar.radio(
         "",
-        ["Selector Configuration", "Documentation", "About"]
+        ["Selector Configuration", "Docs & Examples", "About"]
     )
     
     if section == "Selector configuration":
         selector_config_section()
-    elif section == "Documentation":
+    elif section == "Docs & Examples":
         documentation_section()
     else:
         about_section()
@@ -310,7 +310,7 @@ def selector_config_section():
 
 
 def documentation_section():
-    st.header("dbt Selector Documentation")
+    st.header("dbt Selector documentation")
     
     tabs = st.tabs([
         "Selector Methods", 
@@ -322,7 +322,7 @@ def documentation_section():
     
     with tabs[0]:
         st.markdown("""
-        ## Node Selector Methods
+        ## Node selector methods
         
         Selector methods return all resources that share a common property, using the syntax `method:value`.
         
@@ -348,12 +348,12 @@ def documentation_section():
         | test_name | Selects tests based on the name of the generic test | `test_name:unique` |
         | version | Selects versioned models based on their version identifier | `version:latest` |
         
-        [Full Method Documentation](https://docs.getdbt.com/reference/node-selection/methods)
+        [Full method documentation](https://docs.getdbt.com/reference/node-selection/methods)
         """)
     
     with tabs[1]:
         st.markdown("""
-        ## Graph Operators
+        ## Graph operators
         
         Graph operators allow you to select parents or children of resources in the DAG.
         
@@ -365,12 +365,12 @@ def documentation_section():
         | @ | Similar to +, but includes all ancestors of all descendants | `@my_model` |
         | n+ | Adjusts the number of edges to follow | `2+my_model` (grandparents) |
         
-        [Graph Operators Documentation](https://docs.getdbt.com/reference/node-selection/graph-operators)
+        [Graph operators documentation](https://docs.getdbt.com/reference/node-selection/graph-operators)
         """)
     
     with tabs[2]:
         st.markdown("""
-        ## Set Operators
+        ## Set operators
         
         Set operators allow you to combine multiple selection criteria.
         
@@ -381,12 +381,12 @@ def documentation_section():
         
         In YAML format, these are represented by the `union` and `intersection` keywords.
         
-        [Set Operators Documentation](https://docs.getdbt.com/reference/node-selection/set-operators)
+        [Set operators documentation](https://docs.getdbt.com/reference/node-selection/set-operators)
         """)
     
     with tabs[3]:
         st.markdown("""
-        ## Complex Structures
+        ## Complex structures
         
         In YAML selectors, you can define complex selection logic using nested unions and intersections.
         
@@ -420,7 +420,7 @@ def documentation_section():
                   value: incremental
         ```
         
-        ### Nested Operations
+        ### Nested operations
         
         You can nest unions and intersections to create complex logic:
         
@@ -441,7 +441,7 @@ def documentation_section():
                       value: deprecated
         ```
         
-        [YAML Selectors Documentation](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
+        [YAML selectors documentation](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
         """)
     
     with tabs[4]:
@@ -530,22 +530,21 @@ def about_section():
     st.markdown("""
     This tool helps dbt Cloud users generate a properly formatted `selector.yml` file that follows dbt's documentation and best practices. [Learn more about dbt YAML selectors](https://docs.getdbt.com/reference/node-selection/yaml-selectors)
     
-    ### Features
-    
-    - Create selectors with different definition styles (CLI, Key-value, Full YAML)
-    - Configure graph operators like + and @
-    - Build complex selection criteria with unions and intersections
-    - Set up exclusions for your selectors
-    - Copy and download the generated YAML
-    
-    ### Why use selectors?
-    
     YAML selectors provide several benefits:
     - **Legibility:** complex selection criteria are more readable
     - **Version control:** selector definitions can be stored in your git repository
     - **Reusability:** selectors can be referenced in multiple job definitions
     - **Complexity management:** build sophisticated selection logic that would be unwieldy on the command line
+
+    ### App features
     
+    This app streamlines your selector development process by enabling you to:
+    - Create selectors with different definition styles (CLI, Key-value, Full YAML)
+    - Configure graph operators like + and @
+    - Build complex selection criteria with unions and intersections
+    - Set up exclusions for your selectors
+    - Copy and download the generated YAML
+
     ### Getting started
     
     1. Create one or more selectors using the form

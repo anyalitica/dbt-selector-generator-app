@@ -451,11 +451,11 @@ def documentation_section():
         ### Example 1: Models for nightly batch processing
                     
         This selector will include models that match any of the following criteria:
-            - Models tagged with `nightly`
-            - Models that are both:
-            - Located in the `models/marts` directory path
-            - Configured with `materialized: incremental`
-            - But will exclude any models that have the tag `skip_batch`            
+        - Models tagged with `nightly`
+        - Models that are both:
+        - Located in the `models/marts` directory path
+        - Configured with `materialized: incremental`
+        - But will exclude any models that have the tag `skip_batch`            
         
         ```yaml
         selectors:
@@ -478,8 +478,8 @@ def documentation_section():
         ### Example 2: Critical models and their dependencies
                     
         This selector will include:
-            - Models tagged with `critical` AND all of their parent models (dependencies)
-            - Models referenced by the `executive_dashboard` exposure AND all of their parent models (dependencies)
+        - Models tagged with `critical` AND all of their parent models (dependencies)
+        - Models referenced by the `executive_dashboard` exposure AND all of their parent models (dependencies)
 
         This configuration ensures you run not just the critical models but everything they depend on as well.            
         
@@ -502,10 +502,10 @@ def documentation_section():
         This selector uses a combination of `intersection` and `union` operators to create a logical selection structure that will include:
 
         Tests that meet BOTH of these criteria:
-            1. Are of resource type "test" (this selects only test resources)
-            2. AND match AT LEAST ONE of the following:
-                - Located in the `models/core` directory path
-                - Tagged with `critical_test`            
+        1. Are of resource type "test" (this selects only test resources)
+        2. AND match AT LEAST ONE of the following:
+        - Located in the `models/core` directory path
+        - Tagged with `critical_test`            
 
 
         ```yaml
@@ -556,9 +556,7 @@ def about_section():
                 
     ### Credits
 
-    Designed by: Anya Prosvetova 
-    Website: [anyalitica.dev](https://anyalitica.dev)
-
+    Designed by: Anya Prosvetova, [anyalitica.dev](https://anyalitica.dev)
     Please submit any issues or suggestions for this app on the [GitHub issues page](https://github.com/anyalitica/dbt-selector-generator-app/issues?q=is%3Aissue).            
     """)
 

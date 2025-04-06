@@ -21,6 +21,7 @@ def main():
     
     # Main sections in the sidebar
     section = st.sidebar.radio(
+        "",
         ["Selector Configuration", "Documentation", "About"]
     )
     
